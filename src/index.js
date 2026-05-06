@@ -1,4 +1,3 @@
-/*
 const MORSE_TABLE = {
   '.-': 'a',
   '-...': 'b',
@@ -37,8 +36,18 @@ const MORSE_TABLE = {
   '----.': '9',
   '-----': '0',
 };
-*/
 
-module.exports = function decode(/* expr */) {
-  throw new Error('Not implemented');
+module.exports = function decode(expr) {
+  const arr = String(expr).split('');
+  const result = [];
+  while (arr.length > 0) {
+    const sequence = arr.splice(0, 10).join('');
+    const morseChar = sequence
+      .replaceAll('11', '-')
+      .replaceAll('10', '.')
+      .replaceAll('0', '');
+    const char = morseChar.includes('*') ? ' ' : MORSE_TABLE[morseChar] || '';
+    result.push(char);
+  }
+  return result.join('');
 };
